@@ -26,7 +26,7 @@ def plot_results(df,title,battery_capacity):
     y5 = df_seaborn['PV Excess production [kW]']
     y3 = df_seaborn['Electrical Energy Charged [kW]']
     y4 = df_seaborn['Electrical Energy Discharged [kW]']
-        
+
     fig, ax = plt.subplots()
     fig.set_size_inches(16, 7)
     

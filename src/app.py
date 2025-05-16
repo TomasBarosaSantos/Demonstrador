@@ -342,8 +342,7 @@ app.layout = html.Div([
     dcc.Tabs(id='tabs', value='tab-1', 
             children=[
                 dcc.Tab(label='Power Demand and Generation Forecasting Algorithms', value='tab-1'),
-                dcc.Tab(label='Energy Optimization Algorithm', value='tab-2'),
-                dcc.Tab(label='Test', value='tab-4'),
+                dcc.Tab(label='Energy Optimization Algorithm', value='tab-4'),
                 dcc.Tab(label='About', value='tab-3'),
                 
         ]),
@@ -403,92 +402,6 @@ def render_content(tab):
 
         ])
     
-    if tab == 'tab-2':
-        return html.Div([
-                html.H2('Optimal Scheduling of Energy Storage'),
-                html.H4('Choose the the input parameters for the optimization:'),
-
-                html.Div([
-                    html.Div([
-                        html.H5('PV Power [kWp]'),
-                        daq.NumericInput(
-                            min=0,
-                            max=30000,
-                            id='pv_power',
-                            value=1200,
-                            size=100,),
-                    ], className="six columns", style={'textAlign': 'center'}),
-                    html.Div([
-                        html.H5('Battery Capacity [kWh]'),
-                        daq.NumericInput(
-                            min=0,
-                            max=30000,
-                            id='batt_capacity',
-                            value=800,
-                            size=100,),
-                    ], className="six columns", style={'textAlign': 'center'}),
-                ], className= 'row', style={'textAlign': 'center'}),
-
-                html.Br(),
-
-                html.Div([
-
-                    html.Div([
-                        dcc.Dropdown(['Rule-Based Model','Optimisation Model without LCOS', 'Optimisation Model with LCOS'],
-                            id='dropdown_1',
-                            value='Rule-Based Model', 
-                            multi=False,
-                            searchable=False,
-                        ),
-                        html.Div(id='dropdown-output-container-1',style={'textAlign': 'center'}),
-                    ], className="six columns", style={'textAlign': 'center'}),
-                    
-                    html.Div([
-                        dcc.Dropdown(['Rule-Based Model','Optimisation Model without LCOS', 'Optimisation Model with LCOS'],
-                            id='dropdown_2',
-                            value='Optimisation Model without LCOS', 
-                            multi=False,
-                            searchable=False,
-                        ),
-                        html.Div(id='dropdown-output-container-2', style={'textAlign': 'center'}),
-                    ], className="six columns", style={'textAlign': 'center'}),
-                    
-                    
-                ], className="row", style={'textAlign': 'center'}),
-
-                html.Div([
-                    html.Div([
-                        dcc.Loading([
-                            dcc.Graph(id='Optimized-Graph_1'),
-                        ], className="six columns", style={'textAlign': 'center'}),
-                    ], className="six columns", style={'textAlign': 'center'}),
-                        
-                    html.Div([
-                        dcc.Loading([
-                            dcc.Graph(id='Optimized-Graph_2'),
-                        ], className="six columns", style={'textAlign': 'center'}),
-                    ], className="six columns", style={'textAlign': 'center'}),
-                ], className="row", style={'textAlign': 'center'}),
-
-                html.Div([
-                    html.H3('Metrics:'),
-                ], className="twelve columns",style={'textAlign': 'center'}),
-
-                html.Div([
-                    html.Div([
-                        dcc.Loading([
-                        html.Div(id='optimization_metrics_1'),
-                        ]),
-                    ], className="six columns",style={'textAlign': 'center'}),
-                    html.Div([
-                        dcc.Loading([
-                        html.Div(id='optimization_metrics_2'),
-                        ]),
-                    ], className="six columns",style={'textAlign': 'center'}),
-                ], className="twelve columns",style={'textAlign': 'center'}),
-
-    
-            ])
     if tab == 'tab-3':
         return html.Div([
             html.H3('About:'),
@@ -503,7 +416,7 @@ def render_content(tab):
     if tab == 'tab-4':
         return html.Div([
             html.H2('Optimal Scheduling of Energy Storage'),
-                html.H4('Choose the the input parameters for the optimization:'),
+                html.H4('Choose the input parameters for the optimization:'),
 
                 html.Div([
                     html.Div([
@@ -512,7 +425,7 @@ def render_content(tab):
                             min=0,
                             max=30000,
                             id='pv_power_t',
-                            value=1200,
+                            value=2500,
                             size=100,),
                     ], className="six columns", style={'textAlign': 'center'}),
                     html.Div([
@@ -521,7 +434,7 @@ def render_content(tab):
                             min=0,
                             max=30000,
                             id='batt_capacity_t',
-                            value=800,
+                            value=1200,
                             size=100,),
                     ], className="six columns", style={'textAlign': 'center'}),
                 ], className= 'row', style={'textAlign': 'center'}),
@@ -531,7 +444,7 @@ def render_content(tab):
                 html.Div([
 
                     html.Div([
-                        dcc.Dropdown(['Rule-Based Model','Optimisation Model without LCOS', 'Optimisation Model with LCOS'],
+                        dcc.Dropdown(['Rule-Based Model','Optimisation Model without Battery Cycles Restriction', 'Optimisation Model with Battery Cycles Restriction'],
                             id='dropdown_t',
                             value='Rule-Based Model', 
                             multi=False,
@@ -541,9 +454,9 @@ def render_content(tab):
                     ], className="six columns", style={'textAlign': 'center'}),
                     
                     html.Div([
-                        dcc.Dropdown(['Rule-Based Model','Optimisation Model without LCOS', 'Optimisation Model with LCOS'],
+                        dcc.Dropdown(['Rule-Based Model','Optimisation Model without Battery Cycles Restriction', 'Optimisation Model with Battery Cycles Restriction'],
                             id='dropdown_t2',
-                            value='Optimisation Model without LCOS', 
+                            value='Optimisation Model without Battery Cycles Restriction', 
                             multi=False,
                             searchable=False,
                         ),
@@ -616,111 +529,6 @@ def forecasting(date):
 
 
 @app.callback(
-    dash.dependencies.Output('dropdown-output-container-1', 'children'),
-    dash.dependencies.Output('dropdown-output-container-2', 'children'),
-
-    dash.dependencies.Input('dropdown_1', 'value'),
-    dash.dependencies.Input('dropdown_2', 'value'),
-)
-
-def dropdown_output(dropdown_1, dropdown_2):
-
-    if dropdown_1 == 'Rule-Based Model':
-        text_1 = 'Rule-Based Model:'
-    elif dropdown_1 == 'Optimisation Model without LCOS':
-        text_1 = 'Optimisation Model without LCOS:'
-    elif dropdown_1 == 'Optimisation Model with LCOS':
-        text_1 = 'Optimisation Model with LCOS:'
-    if dropdown_2 == 'Rule-Based Model':
-        text_2 = 'Rule-Based Model:'
-    elif dropdown_2 == 'Optimisation Model without LCOS':
-        text_2 = 'Optimisation Model without LCOS:'
-    elif dropdown_2 == 'Optimisation Model with LCOS':
-        text_2 = 'Optimisation Model with LCOS:'
-    
-    return html.H4(text_1), html.H4(text_2)
-
-@app.callback(
-    dash.dependencies.Output('Optimized-Graph_1', 'figure'),
-    dash.dependencies.Output('optimization_metrics_1', 'children'),
-    dash.dependencies.Output('Optimized-Graph_2', 'figure'),
-    dash.dependencies.Output('optimization_metrics_2', 'children'),
-
-    dash.dependencies.Input('dropdown_1', 'value'),
-    dash.dependencies.Input('dropdown_2', 'value'),
-    dash.dependencies.Input('my-date-picker-single', 'date'),
-    dash.dependencies.Input('pv_power', 'value'),
-    dash.dependencies.Input('batt_capacity', 'value'),
-)
-
-def dropdown_output_1(dropdown_1, dropdown_2, date, pv_power, batt_capacity):
-    df = dataframe_date(df_Opti_Data,date)
-
-    data_Forecast = run_forecasting(df_Forecast_Data,date)
-    data_PV = run_forecasting_PV(Previsoes,date)
-    df_Data = combine_data(df, data_Forecast, data_PV)
-    df_OptimalElectric_NoBatt, optimal_Value , df_OptimalThermal, model, results = OptimizationModel.Optimization(pv_power, 0.0, 0.0, df_Data, True, False)
-
-    if dropdown_1 or dropdown_2 == 'Rule-Based Model':
-        df_Rule = rule_based.dumb_PV_Batt(df_Data, pv_power, batt_capacity)
-        Graph_Rule = px.line(df_Rule,labels={'x': ' ', 'value': 'Power [kW]'})
-        Graph_Rule.update_layout(legend=dict(
-            yanchor="bottom",
-            y=-0.50,
-            xanchor="center",
-            x=0.50,
-            orientation="h",
-        ),legend_title_text="")
-        table_metrics_Rule = generate_table_wHead(optimization_metrics(df_OptimalElectric_NoBatt, df_Rule, pv_power, batt_capacity))
-
-    if dropdown_1 or dropdown_2 == 'Optimisation Model without LCOS':
-        df_OptimalElectric_No_LCOS, optimal_Value , df_OptimalThermal, model, results = OptimizationModel.Optimization(pv_power, batt_capacity, 0.0, df_Data, False, False)
-        Graph_NoLCOS = px.line(df_OptimalElectric_No_LCOS,labels={'x': ' ', 'value': 'Power [kW]'})
-        Graph_NoLCOS.update_layout(legend=dict(
-            yanchor="bottom",
-            y=-0.50,
-            xanchor="center",
-            x=0.50,
-            orientation="h",
-
-        ),legend_title_text="")
-        table_metrics_No_LCOS = generate_table_wHead(optimization_metrics(df_OptimalElectric_NoBatt, df_OptimalElectric_No_LCOS, pv_power, batt_capacity))
-
-    if dropdown_1 or dropdown_2 == 'Optimisation Model with LCOS':
-        df_OptimalElectric_LCOS, optimal_Value , df_OptimalThermal, model, results = OptimizationModel.Optimization(pv_power, batt_capacity, 0.0, df_Data, True, False)
-        Graph_LCOS = px.line(df_OptimalElectric_LCOS,labels={'x': ' ', 'value': 'Power [kW]'})
-        Graph_LCOS.update_layout(legend=dict(
-            yanchor="bottom",
-            y=-0.50,
-            xanchor="center",
-            x=0.50,
-            orientation="h",
-
-        ),legend_title_text="")
-        table_metrics = generate_table_wHead(optimization_metrics(df_OptimalElectric_NoBatt, df_OptimalElectric_LCOS, pv_power, batt_capacity))
-    
-    if dropdown_1 == 'Rule-Based Model':
-        Graph_1 = Graph_Rule
-        table_metrics_1 = table_metrics_Rule
-    elif dropdown_1 == 'Optimisation Model without LCOS':
-        Graph_1 = Graph_NoLCOS
-        table_metrics_1 = table_metrics_No_LCOS
-    elif dropdown_1 == 'Optimisation Model with LCOS':
-        Graph_1 = Graph_LCOS
-        table_metrics_1 = table_metrics
-    if dropdown_2 == 'Rule-Based Model':
-        Graph_2 = Graph_Rule
-        table_metrics_2 = table_metrics_Rule
-    elif dropdown_2 == 'Optimisation Model without LCOS':
-        Graph_2 = Graph_NoLCOS
-        table_metrics_2 = table_metrics_No_LCOS
-    elif dropdown_2 == 'Optimisation Model with LCOS':
-        Graph_2 = Graph_LCOS
-        table_metrics_2 = table_metrics
-
-    return Graph_1, table_metrics_1, Graph_2, table_metrics_2
-
-@app.callback(
     dash.dependencies.Output('dropdown-output-container-t', 'children'),
     dash.dependencies.Output('dropdown-output-container-t2', 'children'),
 
@@ -777,7 +585,7 @@ def dropdown_output_1(dropdown_1, dropdown_2, date, pv_power, batt_capacity):
 
         table_metrics_Rule = generate_table_wHead(optimization_metrics(df_OptimalElectric_NoBatt, df_Rule, pv_power, batt_capacity))
 
-    if dropdown_1 or dropdown_2 == 'Optimisation Model without LCOS':
+    if dropdown_1 or dropdown_2 == 'Optimisation Model without Battery Cycles Restriction':
         df_OptimalElectric_No_LCOS, optimal_Value , df_OptimalThermal, model, results = OptimizationModel.Optimization(pv_power, batt_capacity, 0.0, df_Data, False, False)
         Graph_NoLCOS = graph.plot_results(df_OptimalElectric_No_LCOS,"",batt_capacity)
         buf = BytesIO()
@@ -787,7 +595,7 @@ def dropdown_output_1(dropdown_1, dropdown_2, date, pv_power, batt_capacity):
 
         table_metrics_No_LCOS = generate_table_wHead(optimization_metrics(df_OptimalElectric_NoBatt, df_OptimalElectric_No_LCOS, pv_power, batt_capacity))
 
-    if dropdown_1 or dropdown_2 == 'Optimisation Model with LCOS':
+    if dropdown_1 or dropdown_2 == 'Optimisation Model with Battery Cycles Restriction':
         df_OptimalElectric_LCOS, optimal_Value , df_OptimalThermal, model, results = OptimizationModel.Optimization(pv_power, batt_capacity, 0.0, df_Data, True, False)
         Graph_LCOS = graph.plot_results(df_OptimalElectric_LCOS,"",batt_capacity)
 
@@ -801,19 +609,19 @@ def dropdown_output_1(dropdown_1, dropdown_2, date, pv_power, batt_capacity):
     if dropdown_1 == 'Rule-Based Model':
         Graph_1 = Graph_Rule
         table_metrics_1 = table_metrics_Rule 
-    elif dropdown_1 == 'Optimisation Model without LCOS':
+    elif dropdown_1 == 'Optimisation Model without Battery Cycles Restriction':
         Graph_1 = Graph_NoLCOS
         table_metrics_1 = table_metrics_No_LCOS
-    elif dropdown_1 == 'Optimisation Model with LCOS':
+    elif dropdown_1 == 'Optimisation Model with Battery Cycles Restriction':
         Graph_1 = Graph_LCOS
         table_metrics_1 = table_metrics
     if dropdown_2 == 'Rule-Based Model':
         Graph_2 = Graph_Rule
         table_metrics_2 = table_metrics_Rule
-    elif dropdown_2 == 'Optimisation Model without LCOS':
+    elif dropdown_2 == 'Optimisation Model without Battery Cycles Restriction':
         Graph_2 = Graph_NoLCOS
         table_metrics_2 = table_metrics_No_LCOS
-    elif dropdown_2 == 'Optimisation Model with LCOS':
+    elif dropdown_2 == 'Optimisation Model with Battery Cycles Restriction':
         Graph_2 = Graph_LCOS
         table_metrics_2 = table_metrics
 
@@ -1070,13 +878,9 @@ def dropdown_output(dropdown):
             ], className="twelve columns", style={'textAlign': 'center'}),
 
             html.H4('Project developed by:',style={'font-weight': 'bold'}),
-            html.H5('Team Coordinator:',style={'font-weight': 'bold'}),
             html.H5('Hermano Bernardo - hermano.bernardo@inesctec.pt'),
-            html.H5('Power Demand Forecasting:',style={'font-weight': 'bold'}),
             html.H5('Bruno Palley - bruno.palley@inesctec.pt'),
-            html.H5('PV Generation Forecasting:',style={'font-weight': 'bold'}),
             html.H5('Xavier Godinho - xavier.godinho@inesctec.pt'),
-            html.H5('Energy Optimisation Algorithm:',style={'font-weight': 'bold'}),
             html.H5('Tomás Barosa Santos - tomas.b.santos@inesctec.pt'),
             
         ])
