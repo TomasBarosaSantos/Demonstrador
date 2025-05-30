@@ -342,7 +342,7 @@ app.layout = html.Div([
     
     dcc.Tabs(id='tabs', value='tab-1', 
             children=[
-                dcc.Tab(label='Power Demand and Generation Forecasting Algorithms', value='tab-1'),
+                dcc.Tab(label='Power Demand and PV Generation Forecasting Algorithms', value='tab-1'),
                 dcc.Tab(label='Energy Optimization Algorithm', value='tab-4'),
                 dcc.Tab(label='About', value='tab-3'),
                 
