@@ -327,7 +327,8 @@ app.layout = html.Div([
         style={'width': '50%', 'height': '50%'}
         ),
 
-    html.H2('Building Energy Management System Optimisation Tool in Smart Buildings'),
+    html.H2('Ferramenta para a otimização da gestão de energia em edifícios inteligentes'),
+    html.H3('Building Energy Management System Optimisation Tool in Smart Buildings'),
 
     html.H3('Choose a date to run the algorithms:'),
     dcc.DatePickerSingle(
@@ -405,7 +406,7 @@ def render_content(tab):
     if tab == 'tab-3':
         return html.Div([
             html.H3('About:'),
-            dcc.Dropdown(['Overall System','Energy Consumption Forecasting', 'Solar Generation Forecasting', 'Energy Optimization', 'Team'],
+            dcc.Dropdown(['Overall System','Power Demand Forecasting', 'Solar Generation Forecasting', 'Energy Optimization', 'Team'],
                          id='dropdown',
                          value='Overall System', 
                          multi=False,
@@ -646,10 +647,10 @@ def dropdown_output(dropdown):
             ],className="twelve columns", style={'textAlign': 'center'}),
 
         ])
-    elif dropdown == 'Energy Consumption Forecasting':
+    elif dropdown == 'Power Demand Forecasting':
         return html.Div([
             html.H4('This algorithm is used for forecasting the power demand.'),
-            html.H4('Using a XGBoost algorithm to forecast the energy consumption.'),
+            html.H4('Using a XGBoost algorithm to forecast the power demand.'),
 
             html.H4('Five different algorithms were tested:'),
             html.Ul([
