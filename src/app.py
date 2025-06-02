@@ -877,6 +877,9 @@ def dropdown_output(dropdown):
                     style={'width': '25%', 'height': '25%'}
                 ),
             ], className="twelve columns", style={'textAlign': 'center'}),
+            html.Div([
+                html.H5('https://www.inesctec.pt/pt'),
+            ], className="twelve columns", style={'textAlign': 'center'}),
 
             html.H4('Project developed by:',style={'font-weight': 'bold'}),
             html.H5('Hermano Bernardo - hermano.bernardo@inesctec.pt'),
