@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_axes_aligner import align
 import matplotlib.dates as mdates
-
+from matplotlib.ticker import AutoLocator
+from matplotlib.dates import DateFormatter
 
 
 def plot_results(df,title,battery_capacity):
@@ -41,8 +42,8 @@ def plot_results(df,title,battery_capacity):
     ax2.set_ylim((0,100))
     ax2.tick_params(axis='y', labelsize=15)
     align.yaxes(ax, 0, ax2, 0, 0.22)
+    
     stack = ax.stackplot(x, y4, y2, y1, y5, colors=['#d90166','#ff9408','#3d7afd','#ee1b01'], alpha= 0.75, labels=['Energy Discharged from Battery [kW]','PV Self-Consumption [kW]','Grid-Supplied Energy [kW]','PV Excess Generation [kW]'], linewidth=1)
-
 
     line2 = ax2.plot(df_seaborn.index, df_seaborn_axis2, color='darkslategray', label='Battery SOC [%]', linestyle='--', linewidth=1)
     line1 = ax.plot(x, y3, color='green', label='Electrical Energy Charged [kW]', linewidth=1)

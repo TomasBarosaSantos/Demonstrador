@@ -881,7 +881,7 @@ def dropdown_output(dropdown):
                 html.H5('https://www.inesctec.pt/pt'),
             ], className="twelve columns", style={'textAlign': 'center'}),
 
-            html.H4('Project developed by:',style={'font-weight': 'bold'}),
+            html.H4('Project developed by:',style={'font-weight': 'bold', 'percent': '100%'}),
             html.H5('Hermano Bernardo - hermano.bernardo@inesctec.pt'),
             html.H5('Bruno Palley - bruno.palley@inesctec.pt'),
             html.H5('Xavier Godinho - xavier.godinho@inesctec.pt'),
