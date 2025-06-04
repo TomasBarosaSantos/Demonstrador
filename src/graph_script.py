@@ -43,10 +43,10 @@ def plot_results(df,title,battery_capacity):
     ax2.tick_params(axis='y', labelsize=15)
     align.yaxes(ax, 0, ax2, 0, 0.22)
     
-    stack = ax.stackplot(x, y4, y2, y1, y5, colors=['#d90166','#ff9408','#3d7afd','#ee1b01'], alpha= 0.75, labels=['Energy Discharged from Battery [kW]','PV Self-Consumption [kW]','Grid-Supplied Energy [kW]','PV Excess Generation [kW]'], linewidth=1)
+    stack = ax.stackplot(x, y4, y2, y1, y5, colors=['#d90166','#ff9408','#3d7afd','#ee1b01'], alpha= 0.75, labels=['Power Discharged from Battery [kW]','PV Self-Consumption [kW]','Grid-Supplied Power [kW]','PV Excess Generation [kW]'], linewidth=1)
 
     line2 = ax2.plot(df_seaborn.index, df_seaborn_axis2, color='darkslategray', label='Battery SOC [%]', linestyle='--', linewidth=1)
-    line1 = ax.plot(x, y3, color='green', label='Electrical Energy Charged [kW]', linewidth=1)
+    line1 = ax.plot(x, y3, color='green', label='Electrical Power Charged [kW]', linewidth=1)
 
     lns = line1+line2 + stack
 
