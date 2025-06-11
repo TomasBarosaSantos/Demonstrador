@@ -863,4 +863,4 @@ def dropdown_output(dropdown):
 
 if __name__ == '__main__':
     #app.run(dev_tools_hot_reload=False, debug=True)
-    app.run()
+    app.run(port = 8050, host="0.0.0.0")
