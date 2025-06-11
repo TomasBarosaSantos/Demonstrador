@@ -451,7 +451,6 @@ def render_content(tab):
                             multi=False,
                             searchable=False,
                         ),
-                        html.Div(id='dropdown-output-container-t',style={'textAlign': 'center'}),
                     ], className="six columns", style={'textAlign': 'center'}),
                     
                     html.Div([
@@ -461,7 +460,6 @@ def render_content(tab):
                             multi=False,
                             searchable=False,
                         ),
-                        html.Div(id='dropdown-output-container-t2', style={'textAlign': 'center'}),
                     ], className="six columns", style={'textAlign': 'center'}),
                     
                     
@@ -527,33 +525,6 @@ def forecasting(date):
     table_metrics_PV = generate_table_head(df_forecasting_metrics_PV)
 
     return forecast_fig, solar_fig, table_metrics_Consumption, table_metrics_PV
-
-
-@app.callback(
-    dash.dependencies.Output('dropdown-output-container-t', 'children'),
-    dash.dependencies.Output('dropdown-output-container-t2', 'children'),
-
-    dash.dependencies.Input('dropdown_t', 'value'),
-    dash.dependencies.Input('dropdown_t2', 'value'),
-)
-
-def dropdown_output(dropdown_t, dropdown_t2):
-
-    if dropdown_t == 'Rule-Based Model':
-        text_1 = 'Rule-Based Model:'
-    elif dropdown_t == 'Optimisation Model without LCOS':
-        text_1 = 'Optimisation Model without LCOS:'
-    elif dropdown_t == 'Optimisation Model with LCOS':
-        text_1 = 'Optimisation Model with LCOS:'
-    if dropdown_t2 == 'Rule-Based Model':
-        text_2 = 'Rule-Based Model:'
-    elif dropdown_t2 == 'Optimisation Model without LCOS':
-        text_2 = 'Optimisation Model without LCOS:'
-    elif dropdown_t2 == 'Optimisation Model with LCOS':
-        text_2 = 'Optimisation Model with LCOS:'
-    
-    return html.H4(text_1), html.H4(text_2)
-
 
 @app.callback(
     dash.dependencies.Output('Optimized-Graph_t', component_property='src'),
